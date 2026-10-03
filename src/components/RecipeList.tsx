@@ -72,31 +72,52 @@ export const RecipeList: React.FC<RecipeListProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Top action row */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-neutral-900 tracking-tight">Recetario</h2>
-          <p className="text-xs text-neutral-500 mt-0.5">
-            Gestiona tus recetas y sus ingredientes para armar tu menú semanal.
-          </p>
-        </div>
+      {/* Top Header and Actions */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">Recetario</h2>
+            <p className="text-xs sm:text-sm text-neutral-500 mt-0.5">
+              Gestiona tus recetas y sus ingredientes para armar tu menú semanal.
+            </p>
+          </div>
 
-        <div className="flex items-center gap-2">
           {recipes.length === 0 && (
             <button
               type="button"
               onClick={onRestoreDefaults}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-neutral-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-medium text-neutral-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors min-h-[44px]"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Cargar ejemplos</span>
             </button>
           )}
+        </div>
+
+        {/* Search Bar + Nueva Receta Button:
+            - Mobile (<640px): stacked vertically, button full width (w-full)
+            - Tablet & Desktop (>=640px, sm:): in the same row
+        */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1">
+          {recipes.length > 0 ? (
+            <div className="relative w-full sm:max-w-md">
+              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Buscar por receta o ingrediente..."
+                className="w-full pl-9 pr-4 py-2.5 bg-white border border-neutral-300 rounded-xl text-xs sm:text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors min-h-[44px]"
+              />
+            </div>
+          ) : (
+            <div />
+          )}
 
           <button
             type="button"
             onClick={() => setIsCreateModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 transition-colors shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 transition-colors shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 min-h-[44px] shrink-0"
           >
             <Plus className="w-4 h-4" />
             <span>Nueva receta</span>
@@ -104,23 +125,9 @@ export const RecipeList: React.FC<RecipeListProps> = ({
         </div>
       </div>
 
-      {/* Search Bar */}
-      {recipes.length > 0 && (
-        <div className="relative max-w-md">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar por receta o ingrediente..."
-            className="w-full pl-9 pr-4 py-2 bg-white border border-neutral-300 rounded-lg text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-colors"
-          />
-        </div>
-      )}
-
-      {/* Recipe Cards Grid */}
+      {/* Recipe Cards Grid: 1 col in mobile, 2 in tablet (sm), 3 in desktop (lg), 4 in >1536px (2xl) */}
       {filteredRecipes.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6">
           {filteredRecipes.map((recipe) => (
             <RecipeCard
               key={recipe.id}

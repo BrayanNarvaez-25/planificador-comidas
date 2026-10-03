@@ -52,11 +52,11 @@ export const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   const maxWidthClasses = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    '2xl': 'max-w-2xl',
+    sm: 'sm:max-w-sm',
+    md: 'sm:max-w-md',
+    lg: 'sm:max-w-[580px]',
+    xl: 'sm:max-w-[620px]',
+    '2xl': 'sm:max-w-[640px]',
   };
 
   return (
@@ -64,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-black/50 backdrop-blur-xs transition-opacity duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 overflow-y-auto bg-black/50 backdrop-blur-xs transition-opacity duration-200"
       onClick={(e) => {
         // Close when clicking directly on backdrop
         if (e.target === e.currentTarget) {
@@ -74,36 +74,36 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div
         ref={modalRef}
-        className={`w-full ${maxWidthClasses[maxWidth]} my-auto bg-white rounded-2xl border border-neutral-200 shadow-xl overflow-hidden flex flex-col max-h-[90vh] transition-all transform duration-200`}
+        className={`w-full ${maxWidthClasses[maxWidth]} my-auto bg-white rounded-2xl sm:rounded-3xl border border-neutral-200 shadow-xl overflow-hidden flex flex-col max-h-[90vh] transition-all transform duration-200`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-100">
-          <h2 id="modal-title" className="text-lg font-semibold text-neutral-900 tracking-tight">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-neutral-100 shrink-0">
+          <h2 id="modal-title" className="text-base sm:text-lg font-bold text-neutral-900 tracking-tight">
             {title}
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Cerrar modal"
-            className="p-1.5 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+            className="min-w-[40px] min-h-[40px] flex items-center justify-center text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Content Body */}
-        <div className="px-6 py-5 overflow-y-auto flex-1 text-sm text-neutral-600">
+        {/* Content Body with internal scroll */}
+        <div className="px-4 sm:px-6 py-4 sm:py-5 overflow-y-auto flex-1 text-xs sm:text-sm text-neutral-600">
           {children}
         </div>
 
-        {/* Footer actions */}
+        {/* Footer actions: fixed at the bottom */}
         {!hideFooter && (
-          <div className="flex items-center justify-end gap-3 px-6 py-4 bg-neutral-50/80 border-t border-neutral-100">
+          <div className="sticky bottom-0 z-10 shrink-0 flex items-center justify-end gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white sm:bg-neutral-50/90 border-t border-neutral-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 hover:text-neutral-900 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
+              className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-xl hover:bg-neutral-50 hover:text-neutral-900 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900 flex items-center justify-center"
             >
               {cancelText}
             </button>
@@ -112,7 +112,7 @@ export const Modal: React.FC<ModalProps> = ({
                 type="button"
                 onClick={onConfirm}
                 disabled={confirmDisabled}
-                className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`flex-1 sm:flex-initial min-h-[44px] px-5 py-2 text-xs sm:text-sm font-semibold text-white rounded-xl transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center ${
                   confirmVariant === 'danger'
                     ? 'bg-rose-600 hover:bg-rose-700 focus-visible:outline-rose-600'
                     : 'bg-emerald-600 hover:bg-emerald-700 focus-visible:outline-emerald-600'

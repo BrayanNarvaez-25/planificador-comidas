@@ -117,16 +117,16 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
         <div className="absolute top-1/2 -translate-y-1/2 left-0.5 w-1 h-10 rounded-full bg-neutral-400/60 group-hover:bg-white transition-colors" />
       </div>
 
-      {/* 2. Backdrop for mobile/touch screens when drawer is open */}
+      {/* 2. Backdrop for mobile/touch screens when drawer is open (closes on tap outside) */}
       {isOpen && (
         <div
           onClick={() => updateOpenState(false)}
-          className="fixed inset-0 z-50 bg-black/30 backdrop-blur-2xs transition-opacity duration-250 lg:bg-black/15"
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-2xs transition-opacity duration-250"
           aria-hidden="true"
         />
       )}
 
-      {/* 3. The Sliding Drawer Panel (position: fixed, z-50, does NOT shift page content) */}
+      {/* 3. The Sliding Drawer Panel (position: fixed, z-50, does NOT shift page content, max 85% on mobile) */}
       <aside
         ref={drawerRef}
         onMouseEnter={handleMouseEnter}
@@ -134,13 +134,13 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
         onFocus={handleMouseEnter}
         aria-label="Menú principal de navegación"
         aria-hidden={!isOpen}
-        className={`fixed top-0 bottom-0 left-0 z-50 w-72 sm:w-80 bg-white border-r border-neutral-200 shadow-2xl flex flex-col justify-between transition-transform duration-250 ease-out ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-[85vw] max-w-[320px] sm:w-80 bg-white border-r border-neutral-200 shadow-2xl flex flex-col justify-between transition-transform duration-250 ease-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Top Header Section */}
         <div>
-          <div className="flex items-center justify-between p-5 border-b border-neutral-100">
+          <div className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-100">
             <div className="flex items-center gap-2.5">
               <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700">
                 <UtensilsCrossed className="w-5 h-5" />
@@ -157,26 +157,26 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
               type="button"
               onClick={() => updateOpenState(false)}
               aria-label="Cerrar menú lateral"
-              className="p-1.5 text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Navigation Links */}
-          <nav className="p-4 space-y-1.5">
+          <nav className="p-3 sm:p-4 space-y-2">
             {/* Recetas */}
             <button
               type="button"
               onClick={() => handleItemClick('recetas')}
-              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-colors ${
+              className={`w-full min-h-[48px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                 activeTab === 'recetas'
                   ? 'bg-neutral-900 text-white shadow-2xs'
                   : 'text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100'
               }`}
             >
               <div className="flex items-center gap-3">
-                <BookOpen className="w-4 h-4" />
+                <BookOpen className="w-4 h-4 shrink-0" />
                 <span>Recetas</span>
               </div>
               <span
@@ -194,14 +194,14 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
             <button
               type="button"
               onClick={() => handleItemClick('planificador')}
-              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-colors ${
+              className={`w-full min-h-[48px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                 activeTab === 'planificador'
                   ? 'bg-neutral-900 text-white shadow-2xs'
                   : 'text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100'
               }`}
             >
               <div className="flex items-center gap-3">
-                <Calendar className="w-4 h-4" />
+                <Calendar className="w-4 h-4 shrink-0" />
                 <span>Planificador semanal</span>
               </div>
               <span
@@ -219,14 +219,14 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
             <button
               type="button"
               onClick={() => handleItemClick('compras')}
-              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-colors ${
+              className={`w-full min-h-[48px] flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                 activeTab === 'compras'
                   ? 'bg-neutral-900 text-white shadow-2xs'
                   : 'text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100'
               }`}
             >
               <div className="flex items-center gap-3">
-                <ShoppingCart className="w-4 h-4" />
+                <ShoppingCart className="w-4 h-4 shrink-0" />
                 <span>Lista de compras</span>
               </div>
               <span

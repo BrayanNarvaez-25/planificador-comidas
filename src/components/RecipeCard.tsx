@@ -26,13 +26,13 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
           <h3 className="text-base font-semibold text-neutral-900 tracking-tight leading-snug line-clamp-2">
             {recipe.nombre}
           </h3>
-          <div className="flex items-center gap-1 shrink-0">
+          <div className="flex items-center gap-1 shrink-0 -mr-1.5 -mt-1.5">
             <button
               type="button"
               onClick={() => onEdit(recipe)}
               aria-label={`Editar ${recipe.nombre}`}
               title="Editar receta"
-              className="p-1.5 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
+              className="min-w-[40px] min-h-[40px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
             >
               <Edit2 className="w-4 h-4" />
             </button>
@@ -41,7 +41,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
               onClick={() => onDelete(recipe)}
               aria-label={`Eliminar ${recipe.nombre}`}
               title="Eliminar receta"
-              className="p-1.5 text-neutral-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-rose-600"
+              className="min-w-[40px] min-h-[40px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center text-neutral-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-rose-600"
             >
               <Trash2 className="w-4 h-4" />
             </button>

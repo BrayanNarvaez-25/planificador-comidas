@@ -189,76 +189,90 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, onSave, onC
         </div>
 
         {/* Dynamic Ingredient Rows */}
-        <div className="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
+        <div className="space-y-3 max-h-[360px] overflow-y-auto pr-1">
           {ingredientes.map((ing, index) => (
             <div
               key={ing.id}
-              className="p-3 bg-neutral-50/70 border border-neutral-200 rounded-xl space-y-2 sm:space-y-0 sm:flex sm:items-center sm:gap-2"
+              className="p-3 bg-neutral-50/80 border border-neutral-200 rounded-xl space-y-2.5 sm:space-y-0 sm:flex sm:items-center sm:gap-2 shadow-2xs"
             >
-              {/* Ingredient Name */}
-              <div className="flex-1">
+              {/* Mobile top: name + delete button */}
+              <div className="flex items-center gap-2 sm:flex-1">
                 <input
                   type="text"
                   placeholder="Ej. Tomate, Leche..."
                   value={ing.nombre}
                   onChange={(e) => handleIngredientChange(index, 'nombre', e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                  className="flex-1 min-h-[40px] px-3 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs sm:text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
                 />
-              </div>
 
-              {/* Quantity */}
-              <div className="w-24">
-                <input
-                  type="number"
-                  min="0.01"
-                  step="any"
-                  placeholder="Cant."
-                  value={ing.cantidad}
-                  onChange={(e) => handleIngredientChange(index, 'cantidad', e.target.value)}
-                  className="w-full px-2.5 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs text-neutral-900 tabular-nums focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
-                />
-              </div>
-
-              {/* Unit */}
-              <div className="w-28">
-                <select
-                  value={ing.unidad}
-                  onChange={(e) => handleIngredientChange(index, 'unidad', e.target.value as UnidadMedida)}
-                  className="w-full px-2 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs text-neutral-900 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
-                >
-                  {UNIDADES_MEDIDA.map((u) => (
-                    <option key={u} value={u}>
-                      {u}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Category */}
-              <div className="w-36">
-                <select
-                  value={ing.categoria}
-                  onChange={(e) =>
-                    handleIngredientChange(index, 'categoria', e.target.value as CategoriaIngrediente)
-                  }
-                  className="w-full px-2 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs text-neutral-900 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
-                >
-                  {CATEGORIAS_INGREDIENTES.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Delete row button */}
-              <div className="shrink-0 flex justify-end">
+                {/* Delete button (visible on mobile next to name) */}
                 <button
                   type="button"
                   onClick={() => handleRemoveIngredient(index)}
                   disabled={ingredientes.length <= 1}
                   aria-label={`Eliminar ingrediente ${index + 1}`}
-                  className="p-1.5 text-neutral-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-400"
+                  className="sm:hidden min-w-[40px] min-h-[40px] flex items-center justify-center text-neutral-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-30"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Quantity, Unit and Category */}
+              <div className="grid grid-cols-3 sm:flex sm:items-center gap-2">
+                {/* Quantity */}
+                <div className="col-span-1 sm:w-20">
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="any"
+                    placeholder="Cant."
+                    value={ing.cantidad}
+                    onChange={(e) => handleIngredientChange(index, 'cantidad', e.target.value)}
+                    className="w-full min-h-[40px] px-2.5 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs sm:text-sm text-neutral-900 tabular-nums focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                  />
+                </div>
+
+                {/* Unit */}
+                <div className="col-span-1 sm:w-24">
+                  <select
+                    value={ing.unidad}
+                    onChange={(e) => handleIngredientChange(index, 'unidad', e.target.value as UnidadMedida)}
+                    className="w-full min-h-[40px] px-2 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs sm:text-sm text-neutral-900 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+                  >
+                    {UNIDADES_MEDIDA.map((u) => (
+                      <option key={u} value={u}>
+                        {u}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Category */}
+                <div className="col-span-1 sm:w-32">
+                  <select
+                    value={ing.categoria}
+                    onChange={(e) =>
+                      handleIngredientChange(index, 'categoria', e.target.value as CategoriaIngrediente)
+                    }
+                    className="w-full min-h-[40px] px-2 py-1.5 bg-white border border-neutral-300 rounded-lg text-xs sm:text-sm text-neutral-900 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 truncate"
+                  >
+                    {CATEGORIAS_INGREDIENTES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Delete row button (desktop) */}
+              <div className="hidden sm:flex shrink-0 justify-end">
+                <button
+                  type="button"
+                  onClick={() => handleRemoveIngredient(index)}
+                  disabled={ingredientes.length <= 1}
+                  aria-label={`Eliminar ingrediente ${index + 1}`}
+                  className="min-w-[36px] min-h-[36px] flex items-center justify-center text-neutral-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-400"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -268,18 +282,18 @@ export const RecipeForm: React.FC<RecipeFormProps> = ({ initialData, onSave, onC
         </div>
       </div>
 
-      {/* Modal Actions */}
-      <div className="flex items-center justify-end gap-3 pt-4 border-t border-neutral-100">
+      {/* Modal Actions: Fixed sticky footer with min 44px touch targets */}
+      <div className="sticky bottom-0 z-10 -mx-4 sm:-mx-6 -mb-4 sm:-mb-5 px-4 sm:px-6 py-3 sm:py-4 bg-white sm:bg-neutral-50/95 border-t border-neutral-100 flex items-center justify-end gap-2.5 sm:gap-3">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
+          className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-medium text-neutral-700 bg-white border border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900 flex items-center justify-center"
         >
           Cancelar
         </button>
         <button
           type="submit"
-          className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          className="flex-1 sm:flex-initial min-h-[44px] px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 flex items-center justify-center"
         >
           Confirmar
         </button>

@@ -137,7 +137,7 @@ export default function App() {
       />
 
       {/* Main Content Area: Does NOT shift or resize when drawer toggles */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <main className="flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8">
         {activeTab === 'recetas' && (
           <RecipeList
             recipes={recipes}
@@ -171,9 +171,11 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-neutral-200 bg-white py-6 mt-12 text-center text-xs text-neutral-500">
-        <p>Planificador de Comidas · Todos los datos se guardan de forma local en tu navegador.</p>
+      {/* Footer matching same responsive width and padding */}
+      <footer className="border-t border-neutral-200 bg-white py-6 mt-10 sm:mt-12">
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-neutral-500">
+          <p>Planificador de Comidas · Todos los datos se guardan de forma local en tu navegador.</p>
+        </div>
       </footer>
     </div>
   );

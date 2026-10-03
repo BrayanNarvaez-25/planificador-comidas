@@ -167,22 +167,22 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold text-neutral-900 tracking-tight">Lista de Compras</h2>
-          <p className="text-xs text-neutral-500 mt-0.5">
+          <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">Lista de Compras</h2>
+          <p className="text-xs sm:text-sm text-neutral-500 mt-0.5">
             Ingredientes calculados automáticamente a partir de tu menú semanal.
           </p>
         </div>
 
         {totalItems > 0 && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pt-1 sm:pt-0">
             <button
               type="button"
               onClick={handleCopyText}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-medium text-neutral-700 bg-white border border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900 min-h-[44px]"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? '¡Copiado!' : 'Copiar lista'}</span>
             </button>
 
@@ -190,7 +190,7 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
               <button
                 type="button"
                 onClick={onClearComprados}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-medium text-neutral-600 hover:text-neutral-900 bg-white border border-neutral-200 rounded-xl transition-colors min-h-[44px]"
                 title="Desmarcar todos los ítems comprados"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -203,8 +203,8 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
 
       {/* Progress Counter & Bar */}
       {totalItems > 0 && (
-        <div className="bg-white border border-neutral-200 rounded-2xl p-4 shadow-2xs space-y-2.5">
-          <div className="flex items-center justify-between text-xs">
+        <div className="bg-white border border-neutral-200 rounded-2xl p-4 sm:p-5 shadow-2xs space-y-2.5">
+          <div className="flex items-center justify-between text-xs sm:text-sm">
             <div className="flex items-center gap-2 font-medium text-neutral-800">
               <span>Progreso de compra</span>
               <span className="text-neutral-300">·</span>
@@ -217,7 +217,7 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
             </span>
           </div>
 
-          <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
+          <div className="w-full h-2.5 bg-neutral-100 rounded-full overflow-hidden">
             <div
               className="h-full bg-emerald-600 rounded-full transition-all duration-300"
               style={{ width: `${progressPercentage}%` }}
@@ -226,9 +226,12 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
         </div>
       )}
 
-      {/* Shopping Categories List */}
+      {/* Shopping Categories List:
+          - Mobile & Tablet: 1 column
+          - Desktop (>1024px, lg): 2 columns, >1536px (2xl): 3 columns
+      */}
       {totalItems > 0 ? (
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6 items-start">
           {aggregatedItemsByCategory.map((group) => {
             const groupBoughtCount = group.items.filter((item) => comprados.includes(item.key)).length;
 
@@ -238,9 +241,9 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
                 className="bg-white border border-neutral-200 rounded-2xl overflow-hidden shadow-2xs"
               >
                 {/* Category Header */}
-                <div className="px-5 py-3.5 bg-neutral-50/90 border-b border-neutral-200 flex items-center justify-between">
+                <div className="px-4 sm:px-5 py-3.5 bg-neutral-50/90 border-b border-neutral-200 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold text-neutral-900 uppercase tracking-wide">
+                    <h3 className="text-xs sm:text-sm font-bold text-neutral-900 uppercase tracking-wide">
                       {group.categoria}
                     </h3>
                     <span className="text-xs text-neutral-400 tabular-nums">
@@ -248,12 +251,12 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
                     </span>
                   </div>
 
-                  <span className="text-xs text-neutral-500 tabular-nums">
+                  <span className="text-xs text-neutral-500 tabular-nums font-medium">
                     {groupBoughtCount}/{group.items.length} listos
                   </span>
                 </div>
 
-                {/* Category Items List */}
+                {/* Category Items List with min 44px touch areas */}
                 <div className="divide-y divide-neutral-100">
                   {group.items.map((item) => {
                     const isBought = comprados.includes(item.key);
@@ -271,13 +274,14 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
                             onToggleComprado(item.key);
                           }
                         }}
-                        className={`px-5 py-3 flex items-center justify-between gap-4 cursor-pointer select-none transition-colors ${
+                        className={`min-h-[52px] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 cursor-pointer select-none transition-colors ${
                           isBought
                             ? 'bg-neutral-50/50 hover:bg-neutral-100/60'
                             : 'hover:bg-neutral-50/80'
                         }`}
                       >
-                        <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="flex items-center gap-2 min-w-0">
+                          {/* Dedicated touch target button >= 44px */}
                           <button
                             type="button"
                             aria-label={`Marcar ${item.nombre} como ${isBought ? 'no comprado' : 'comprado'}`}
@@ -285,7 +289,7 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
                               e.stopPropagation();
                               onToggleComprado(item.key);
                             }}
-                            className="shrink-0 text-neutral-400 hover:text-neutral-600 focus:outline-none"
+                            className="min-w-[44px] min-h-[44px] -ml-2 flex items-center justify-center text-neutral-400 hover:text-neutral-600 focus:outline-none shrink-0"
                           >
                             {isBought ? (
                               <CheckSquare className="w-5 h-5 text-emerald-600 fill-emerald-50" />
@@ -294,9 +298,9 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
                             )}
                           </button>
 
-                          <div className="min-w-0">
+                          <div className="min-w-0 pr-2">
                             <span
-                              className={`text-sm tracking-tight block truncate ${
+                              className={`text-xs sm:text-sm tracking-tight block truncate ${
                                 isBought
                                   ? 'line-through text-neutral-400'
                                   : 'font-medium text-neutral-900'
@@ -304,7 +308,7 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
                             >
                               {item.nombre}
                             </span>
-                            {/* Recipes origin pill/text */}
+                            {/* Recipes origin text */}
                             <span className="text-[11px] text-neutral-400 truncate block">
                               De: {item.recetasOrigen.map((r) => r.recetaNombre).join(', ')}
                             </span>
@@ -313,7 +317,7 @@ export const ShoppingList: React.FC<ShoppingListProps> = ({
 
                         {/* Quantity and Unit */}
                         <div
-                          className={`text-right shrink-0 text-sm tabular-nums ${
+                          className={`text-right shrink-0 text-xs sm:text-sm tabular-nums ${
                             isBought ? 'text-neutral-400 line-through' : 'font-semibold text-neutral-800'
                           }`}
                         >
