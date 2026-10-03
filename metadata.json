@@ -1,0 +1,6 @@
+{
+  "name": "Planificador de Comidas",
+  "description": "Planifica tus comidas de la semana, organiza desayunos, almuerzos y cenas, y genera automáticamente tu lista de compras por categorías.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
